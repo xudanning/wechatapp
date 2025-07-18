@@ -1,0 +1,489 @@
+<template>
+  <div class="home">
+    <!-- 顶部 仓库信息 -->
+    <div class="header">
+      <span class="clickable" @click="openDialog">{{ selectedWarehouse.name }} ></span>
+    </div>
+    
+    <!-- 卡片区域 -->
+    <div class="cards">
+      <div class="card">
+        <div class="card-content">
+          <div class="card-text">
+            <div class="title">待办数量</div>
+            <div class="value">0</div>
+          </div>
+          <div class="card-icon pending">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="currentColor"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-content">
+          <div class="card-text">
+            <div class="title">库存预警</div>
+            <div class="value">0</div>
+          </div>
+          <div class="card-icon warning">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="currentColor"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 出库管理 -->
+    <div class="section">
+      <h3>出库管理</h3>
+      <div class="grid">
+        <div class="icon-button" style="background-color: #F59E0B;">
+          <div class="icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M19 7h-3V6a4 4 0 0 0-8 0v1H5a1 1 0 0 0-1 1v11a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V8a1 1 0 0 0-1-1zM10 6a2 2 0 0 1 4 0v1h-4V6zm8 13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V9h2v1a1 1 0 0 0 2 0V9h4v1a1 1 0 0 0 2 0V9h2v10z" fill="white"/>
+            </svg>
+          </div>
+          <div class="label">出库</div>
+        </div>
+        <div class="icon-button" style="background-color: #10B981;">
+          <div class="icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z" fill="white"/>
+            </svg>
+          </div>
+          <div class="label">货品领用</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 入库管理 -->
+    <div class="section">
+      <h3>入库管理</h3>
+      <div class="grid">
+        <div class="icon-button" style="background-color: #3B82F6;">
+          <div class="icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M7 14l5-5 5 5z" fill="white"/>
+            </svg>
+          </div>
+          <div class="label">入库</div>
+        </div>
+        <div class="icon-button" style="background-color: #10B981;">
+          <div class="icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="white"/>
+            </svg>
+          </div>
+          <div class="label">领用归还</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 库存管理 -->
+    <div class="section">
+      <h3>库存管理</h3>
+      <div class="grid">
+        <div class="icon-button" style="background-color: #10B981;">
+          <div class="icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z" fill="white"/>
+            </svg>
+          </div>
+          <div class="label">货位货品管理</div>
+        </div>
+        <div class="icon-button" style="background-color: #F59E0B;">
+          <div class="icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M4 4h16v2H4zm0 4h16v2H4zm0 4h16v2H4zm0 4h16v2H4z" fill="white"/>
+            </svg>
+          </div>
+          <div class="label">货品盘点</div>
+        </div>
+        <div class="icon-button" style="background-color: #EF4444;">
+          <div class="icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="white"/>
+            </svg>
+          </div>
+          <div class="label">调拨管理</div>
+        </div>
+        <div class="icon-button" style="background-color: #6B7280;">
+          <div class="icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z" fill="white"/>
+            </svg>
+          </div>
+          <div class="label">库存记录</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 底部导航栏 -->
+    <div class="navbar">
+      <div class="nav-item active">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" fill="currentColor"/>
+        </svg>
+        <span>首页</span>
+      </div>
+      <div class="nav-item">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M19 7h-3V6a4 4 0 0 0-8 0v1H5a1 1 0 0 0-1 1v11a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V8a1 1 0 0 0-1-1z" fill="currentColor"/>
+        </svg>
+        <span>货品</span>
+      </div>
+      <div class="nav-item">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z" fill="currentColor"/>
+        </svg>
+        <span>统计</span>
+      </div>
+      <div class="nav-item">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" fill="currentColor"/>
+        </svg>
+        <span>我的</span>
+      </div>
+    </div>
+
+    <!-- 仓库选择弹窗 -->
+    <div v-if="showDialog" class="dialog-overlay" @click="showDialog = false">
+      <div class="dialog" @click.stop>
+        <div class="dialog-header">
+          <button class="btn-cancel" @click="showDialog = false">取消</button>
+          <h3>{{ selectedWarehouse.name }}</h3>
+          <button class="btn-confirm" @click="confirmSelection">确认</button>
+        </div>
+        <div class="dialog-content">
+          <div class="warehouse-picker">
+            <div class="warehouse-option" 
+                 v-for="warehouse in warehouses" 
+                 :key="warehouse.id"
+                 @click="selectWarehouse(warehouse)"
+                 :class="{ active: tempSelectedWarehouse.id === warehouse.id }">
+              {{ warehouse.name }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { ref, reactive } from 'vue'
+
+const showDialog = ref(false)
+const selectedWarehouse = ref({ id: 1, name: '默认仓库' })
+const tempSelectedWarehouse = ref({ id: 1, name: '默认仓库' })
+
+const warehouses = ref([
+  { id: 1, name: '默认仓库' },
+  { id: 2, name: '仓库A' },
+  { id: 3, name: '仓库B' },
+  { id: 4, name: '仓库C' },
+  { id: 5, name: '仓库D' },
+  { id: 6, name: '仓库E' },
+  { id: 7, name: '仓库F' },
+  { id: 8, name: '仓库G' },
+  { id: 9, name: '仓库H' },
+  { id: 10, name: '仓库I' }
+])
+
+const selectWarehouse = (warehouse) => {
+  tempSelectedWarehouse.value = warehouse
+}
+
+const confirmSelection = () => {
+  selectedWarehouse.value = tempSelectedWarehouse.value
+  showDialog.value = false
+  console.log('选择的仓库:', selectedWarehouse.value)
+}
+
+// 打开弹窗时，设置临时选择为当前选择的仓库
+const openDialog = () => {
+  tempSelectedWarehouse.value = selectedWarehouse.value
+  showDialog.value = true
+}
+</script>
+
+<style scoped>
+.home {
+  min-height: 60px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding-bottom: 80px;
+}
+
+.header {
+  background: transparent;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 16px;
+  font-size: 18px;
+}
+
+.clickable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.language {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+}
+
+.cards {
+  display: flex;
+  gap: 16px;
+  margin: 0 16px 24px 16px;
+}
+
+.card {
+  flex: 1;
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.card-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-text {
+  flex: 1;
+}
+
+.title {
+  color: #6B7280;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.value {
+  font-size: 32px;
+  font-weight: bold;
+  color: #111827;
+}
+
+.card-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 16px;
+}
+
+.card-icon.pending {
+  background: #FEF3C7;
+  color: #F59E0B;
+}
+
+.card-icon.warning {
+  background: #FEE2E2;
+  color: #EF4444;
+}
+
+.section {
+  margin: 24px 16px;
+}
+
+.section h3 {
+  color: #374151;
+  font-size: 18px;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.icon-button {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.2s;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.icon-button:hover {
+  transform: translateY(-2px);
+}
+
+.icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.label {
+  color: #374151;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.navbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  background: white;
+  border-top: 1px solid #E5E7EB;
+  padding: 8px 0;
+  z-index: 1000;
+}
+
+.nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px;
+  cursor: pointer;
+  color: #6B7280;
+  font-size: 12px;
+  transition: color 0.2s;
+}
+
+.nav-item.active {
+  color: #3B82F6;
+}
+
+.nav-item svg {
+  margin-bottom: 4px;
+}
+
+/* 弹窗样式 */
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.dialog {
+  background: white;
+  width: 100%;
+  max-width: 500px;
+  border-radius: 20px 20px 0 0;
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid #E5E7EB;
+}
+
+.dialog-header h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #111827;
+  flex: 1;
+  text-align: center;
+}
+
+.dialog-content {
+  height: 300px;
+  overflow: hidden;
+}
+
+.warehouse-picker {
+  height: 100%;
+  overflow-y: auto;
+  padding: 0 20px;
+}
+
+.warehouse-option {
+  padding: 20px 0;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-bottom: 1px solid #F3F4F6;
+  font-size: 16px;
+  color: #6B7280;
+}
+
+.warehouse-option:hover {
+  background: #F9FAFB;
+}
+
+.warehouse-option.active {
+  color: #3B82F6;
+  font-weight: 600;
+  background: #F0F9FF;
+}
+
+.warehouse-option:last-child {
+  border-bottom: none;
+}
+
+.btn-cancel, .btn-confirm {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 60px;
+}
+
+.btn-cancel {
+  background: transparent;
+  color: #6B7280;
+}
+
+.btn-cancel:hover {
+  background: #F3F4F6;
+}
+
+.btn-confirm {
+  background: transparent;
+  color: #3B82F6;
+  font-weight: 500;
+}
+
+.btn-confirm:hover {
+  background: #EBF8FF;
+}
+</style>
